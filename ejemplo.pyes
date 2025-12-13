@@ -1,0 +1,7 @@
+definir saludar(nombre):
+    si nombre == "Ana":
+        imprimir("Hola Ana")
+    sino:
+        imprimir("Hola", nombre)
+
+saludar("Luis")
