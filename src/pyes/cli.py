@@ -1,19 +1,24 @@
+# pyes/cli.py
+
 import sys
 from pathlib import Path
 
 from pyes.core.transpiler import transpile
 from pyes.core.lexicon.es import SpanishLexicon
+from pyes.core.lexicon.pt import PortugueseLexicon
+from pyes.core.lexicon.fr import FrenchLexicon
 
 
-def get_lexicon(lang: str = "es"):
-    if lang == "es":
-        return SpanishLexicon()
-    raise ValueError(f"Idioma no soportado: {lang}")
+EXTENSION_TO_LEXICON = {
+    ".pyes": SpanishLexicon,
+    ".pypt": PortugueseLexicon,
+    ".pyfr": FrenchLexicon,
+}
 
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("Uso: pyes archivo.pyes")
+        print("Uso: pyes archivo")
         sys.exit(1)
 
     path = Path(sys.argv[1])
@@ -22,14 +27,16 @@ def main() -> None:
         print(f"Archivo no encontrado: {path}")
         sys.exit(1)
 
-    if path.suffix != ".pyes":
-        print("El archivo debe tener extensión .pyes")
-        sys.exit(1)
+    # Python-like behavior: script dir first in sys.path
+    script_dir = str(path.parent.resolve())
+    if script_dir not in sys.path:
+        sys.path.insert(0, script_dir)
 
     source = path.read_text(encoding="utf-8")
 
-    lexicon = get_lexicon("es")
-    output = transpile(source, lexicon)
+    if path.suffix in EXTENSION_TO_LEXICON:
+        lexicon = EXTENSION_TO_LEXICON[path.suffix]()
+        source = transpile(source, lexicon)
 
     globals_context = {
         "__name__": "__main__",
@@ -37,4 +44,4 @@ def main() -> None:
         "__builtins__": __builtins__,
     }
 
-    exec(output, globals_context)
+    exec(compile(source, str(path), "exec"), globals_context)

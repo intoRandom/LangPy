@@ -1,3 +1,6 @@
+desde copy importar suma
+
+
 definir saludar(nombre):
     si nombre == "Ana":
         imprimir("Hola Ana")
@@ -5,3 +8,4 @@ definir saludar(nombre):
         imprimir("Hola", nombre)
 
 saludar("Luis")
+imprimir(suma(5, 3))

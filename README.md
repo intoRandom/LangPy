@@ -49,3 +49,90 @@ Si una idea cruza alguno de estos puntos, está fuera del proyecto.
 ```bash
 pip install pyes
 ```
+
+(O en desarrollo)
+
+```bash
+pip install -e .
+```
+
+---
+
+## Uso básico
+
+Archivo ejemplo.pyes:
+
+```pyes
+definir saludar(nombre):
+    si nombre == "Ana":
+        imprimir("Hola Ana")
+    sino:
+        imprimir("Hola", nombre)
+
+saludar("Luis")
+```
+
+Ejecutar:
+
+```bash
+pyes ejemplo.pyes
+```
+
+El código se transpila a Python estándar y se ejecuta inmediatamente.
+
+---
+
+## Cómo funciona internamente
+
+```bash
+.pyes
+  ↓
+tokenize (Python estándar)
+  ↓
+reemplazo léxico controlado
+  ↓
+untokenize
+  ↓
+exec en Python
+```
+
+Detalles importantes:
+
+- Solo se traducen tokens NAME
+- No se tocan strings ni comentarios
+- No se traducen atributos (obj.metodo)
+- Si Python no puede tokenizar el código, PyEs tampoco
+
+---
+
+## Idiomas
+
+Actualmente soportado:
+
+- Español (es)
+
+El sistema de lexicon es modular y permite agregar otros idiomas sin
+modificar el core.
+
+---
+
+## Estado del proyecto
+
+Versión actual: 0.1.0
+
+- Core estable y testeado
+- CLI funcional
+- Límites del proyecto definidos
+
+Funcionalidades pendientes:
+
+- Flags de CLI (--lang, --version)
+- Selección dinámica de idioma
+- Tests del CLI
+- Documentación extendida
+
+---
+
+## Licencia
+
+MIT

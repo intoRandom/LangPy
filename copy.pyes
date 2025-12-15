@@ -1,0 +1,2 @@
+definir suma(a, b):
+    retornar a + b
