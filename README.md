@@ -5,7 +5,7 @@
 LangPy is a lexical layer over Python that lets you write code using keywords in human languages, without changing Python's behavior.
 
 ```python
-# ejemplo.langpy (Spanish)
+# ejemplo.pyes (Spanish)
 definir saludar(nombre):
     si nombre == "Ana":
         imprimir("Hola Ana")
@@ -16,7 +16,7 @@ saludar("Luis")
 ```
 
 ```bash
-$ langpy ejemplo.langpy
+$ langpy ejemplo.pyes
 Hola Luis
 ```
 
@@ -52,7 +52,7 @@ pip install langpy
 
 ### Your First Program
 
-Create a file `hello.langpy`:
+Create a file `hello.pyes`:
 
 ```python
 definir main():
@@ -65,7 +65,7 @@ main()
 Run it:
 
 ```bash
-langpy hello.langpy
+langpy hello.pyes
 ```
 
 That's it! LangPy transpiles your code to standard Python and executes it immediately.
@@ -74,7 +74,7 @@ That's it! LangPy transpiles your code to standard Python and executes it immedi
 
 | Language   | Extension | Keywords Example                     |
 | ---------- | --------- | ------------------------------------ |
-| Spanish    | `.langpy` | `definir`, `si`, `sino`, `imprimir`  |
+| Spanish    | `.pyes`   | `definir`, `si`, `sino`, `imprimir`  |
 | Portuguese | `.pypt`   | `definir`, `se`, `senao`, `imprimir` |
 | French     | `.pyfr`   | `definir`, `si`, `sinon`, `imprimer` |
 
@@ -84,7 +84,7 @@ The language is determined **solely by the file extension**. No flags or configu
 
 LangPy works seamlessly with local imports and external libraries.
 
-**operations.langpy**
+**operations.pyes**
 
 ```python
 definir suma(a, b):
@@ -94,7 +94,7 @@ definir resta(a, b):
     retornar a - b
 ```
 
-**main.langpy**
+**main.pyes**
 
 ```python
 desde operations importar suma, resta
@@ -115,13 +115,13 @@ analizar_datos()
 Run it:
 
 ```bash
-langpy main.langpy
+langpy main.pyes
 ```
 
 ## How It Works
 
 ```
-.langpy / .pypt / .pyfr file
+.pyes / .pypt / .pyfr file
         ↓
 tokenize (Python stdlib)
         ↓
@@ -145,13 +145,13 @@ execute with Python VM
 ### Execute directly
 
 ```bash
-langpy script.langpy
+langpy script.pyes
 ```
 
 ### Transpile to Python
 
 ```bash
-langpy --transpile script.langpy
+langpy --transpile script.pyes
 ```
 
 This generates standard `.py` files that you can run with `python`.
@@ -159,7 +159,7 @@ This generates standard `.py` files that you can run with `python`.
 ### Force overwrite
 
 ```bash
-langpy --transpile --force script.langpy
+langpy --transpile --force script.pyes
 ```
 
 ### Get help

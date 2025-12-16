@@ -25,8 +25,8 @@ authors = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/pypa/sampleproject"
-Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://langpy.intorandom.com/"
+Issues = "https://github.com/intoRandom/LangPy/issues"
 
 [project.scripts]
 langpy = "langpy.cli:main"
