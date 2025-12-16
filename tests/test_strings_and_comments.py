@@ -1,5 +1,5 @@
-from pyes.core.transpiler import transpile
-from pyes.core.lexicon.es import SpanishLexicon
+from langpy.core.transpiler import transpile
+from langpy.core.lexicon.es import SpanishLexicon
 
 
 def test_import_translation():

@@ -3,10 +3,10 @@ from pathlib import Path
 from importlib.machinery import ModuleSpec
 from importlib.abc import MetaPathFinder, Loader
 
-from pyes.core.transpiler import transpile
-from pyes.core.lexicon.es import SpanishLexicon
-from pyes.core.lexicon.pt import PortugueseLexicon
-from pyes.core.lexicon.fr import FrenchLexicon
+from langpy.core.transpiler import transpile
+from langpy.core.lexicon.es import SpanishLexicon
+from langpy.core.lexicon.pt import PortugueseLexicon
+from langpy.core.lexicon.fr import FrenchLexicon
 
 
 EXTENSION_TO_LEXICON = {
@@ -16,7 +16,7 @@ EXTENSION_TO_LEXICON = {
 }
 
 
-class PyEsFinder(MetaPathFinder):
+class LangPyFinder(MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
         parts = fullname.split(".")
         module_name = parts[-1]
@@ -32,7 +32,7 @@ class PyEsFinder(MetaPathFinder):
                 if module_file.is_file():
                     return ModuleSpec(
                         name=fullname,
-                        loader=PyEsLoader(),
+                        loader=LangPyLoader(),
                         origin=str(module_file.resolve()),
                         is_package=False,
                     )
@@ -45,7 +45,7 @@ class PyEsFinder(MetaPathFinder):
                     if init_file.is_file():
                         spec = ModuleSpec(
                             name=fullname,
-                            loader=PyEsLoader(),
+                            loader=LangPyLoader(),
                             origin=str(init_file.resolve()),
                             is_package=True,
                         )
@@ -56,7 +56,7 @@ class PyEsFinder(MetaPathFinder):
         return None
 
 
-class PyEsLoader(Loader):
+class LangPyLoader(Loader):
     def create_module(self, spec):
         # Usar el mecanismo estándar de Python
         return None

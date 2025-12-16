@@ -1,68 +1,11 @@
-# PyEs
+# LangPy
 
-PyEs es una capa léxica sobre Python que permite escribir código usando
-palabras reservadas en español, sin cambiar el comportamiento de Python.
+**Write Python in your native language** 🌍
 
-No es un lenguaje nuevo.
-No tiene intérprete propio.
-No modifica la semántica del código.
-No traduce APIs ni librerías.
+LangPy is a lexical layer over Python that lets you write code using keywords in human languages, without changing Python's behavior.
 
-PyEs traduce **cómo se escribe el código**, no **lo que el código hace**.
-
----
-
-## Qué es PyEs
-
-- Un transpiler léxico
-- Basado en `tokenize` de Python
-- Traduce palabras reservadas en español a Python estándar
-- Ejecuta el resultado con la VM de Python
-
-El código PyEs:
-
-- Se transpila a Python válido
-- Se ejecuta con `exec`
-- Puede usar cualquier librería Python
-- Es fácilmente migrable a Python puro
-
----
-
-## Qué NO es PyEs
-
-PyEs **no**:
-
-- Traduce mensajes de error
-- Traduce APIs ni nombres de librerías
-- Tiene parser propio
-- Tiene AST propio
-- Tiene runtime o VM propia
-- Cambia el comportamiento de Python
-- Es un lenguaje alternativo
-
-Si una idea cruza alguno de estos puntos, está fuera del proyecto.
-
----
-
-## Instalación
-
-```bash
-pip install pyes
-```
-
-(O en desarrollo)
-
-```bash
-pip install -e .
-```
-
----
-
-## Uso básico
-
-Archivo ejemplo.pyes:
-
-```pyes
+```python
+# ejemplo.langpy (Spanish)
 definir saludar(nombre):
     si nombre == "Ana":
         imprimir("Hola Ana")
@@ -72,67 +15,178 @@ definir saludar(nombre):
 saludar("Luis")
 ```
 
-Ejecutar:
-
 ```bash
-pyes ejemplo.pyes
+$ langpy ejemplo.langpy
+Hola Luis
 ```
 
-El código se transpila a Python estándar y se ejecuta inmediatamente.
+## Why LangPy?
 
----
+LangPy makes Python more accessible to non-English speakers by allowing you to use natural language keywords while keeping everything else exactly the same.
 
-## Cómo funciona internamente
+### What LangPy IS ✅
+
+- A **lexical transpiler** that translates keywords to Python
+- **100% compatible** with Python libraries and tools
+- **Zero runtime overhead** - executes as native Python
+- **Easy migration** path back to pure Python
+
+### What LangPy is NOT ❌
+
+- NOT a new programming language
+- NOT a custom interpreter or VM
+- NOT translating error messages or APIs
+- NOT changing Python's semantics
+
+**If something crosses these boundaries, it's out of scope.**
+
+## Quick Start
+
+### Installation
+
+Requirements: Python 3.10+
 
 ```bash
-.pyes
-  ↓
-tokenize (Python estándar)
-  ↓
-reemplazo léxico controlado
-  ↓
+pip install langpy
+```
+
+### Your First Program
+
+Create a file `hello.langpy`:
+
+```python
+definir main():
+    nombre = "World"
+    imprimir(f"Hello {nombre}!")
+
+main()
+```
+
+Run it:
+
+```bash
+langpy hello.langpy
+```
+
+That's it! LangPy transpiles your code to standard Python and executes it immediately.
+
+## Supported Languages
+
+| Language   | Extension | Keywords Example                     |
+| ---------- | --------- | ------------------------------------ |
+| Spanish    | `.langpy` | `definir`, `si`, `sino`, `imprimir`  |
+| Portuguese | `.pypt`   | `definir`, `se`, `senao`, `imprimir` |
+| French     | `.pyfr`   | `definir`, `si`, `sinon`, `imprimer` |
+
+The language is determined **solely by the file extension**. No flags or configuration needed.
+
+## Real-World Example
+
+LangPy works seamlessly with local imports and external libraries.
+
+**operations.langpy**
+
+```python
+definir suma(a, b):
+    retornar a + b
+
+definir resta(a, b):
+    retornar a - b
+```
+
+**main.langpy**
+
+```python
+desde operations importar suma, resta
+importar numpy como np
+
+definir analizar_datos():
+    # Use your functions
+    resultado = suma(10, 5)
+    imprimir(f"Suma: {resultado}")
+
+    # Use any Python library
+    datos = np.array([1, 2, 3, 4, 5])
+    imprimir(f"Media: {np.mean(datos)}")
+
+analizar_datos()
+```
+
+Run it:
+
+```bash
+langpy main.langpy
+```
+
+## How It Works
+
+```
+.langpy / .pypt / .pyfr file
+        ↓
+tokenize (Python stdlib)
+        ↓
+keyword replacement
+        ↓
 untokenize
-  ↓
-exec en Python
+        ↓
+execute with Python VM
 ```
 
-Detalles importantes:
+### Key Design Principles
 
-- Solo se traducen tokens NAME
-- No se tocan strings ni comentarios
-- No se traducen atributos (obj.metodo)
-- Si Python no puede tokenizar el código, PyEs tampoco
+- Only `NAME` tokens are translated (keywords)
+- Strings and comments remain unchanged
+- Attribute names are preserved (`obj.method`)
+- No custom AST or parser
+- If Python can't tokenize it, neither can LangPy
 
----
+## CLI Usage
 
-## Idiomas
+### Execute directly
 
-Actualmente soportado:
+```bash
+langpy script.langpy
+```
 
-- Español (es)
+### Transpile to Python
 
-El sistema de lexicon es modular y permite agregar otros idiomas sin
-modificar el core.
+```bash
+langpy --transpile script.langpy
+```
 
----
+This generates standard `.py` files that you can run with `python`.
 
-## Estado del proyecto
+### Force overwrite
 
-Versión actual: 0.1.0
+```bash
+langpy --transpile --force script.langpy
+```
 
-- Core estable y testeado
-- CLI funcional
-- Límites del proyecto definidos
+### Get help
 
-Funcionalidades pendientes:
+```bash
+langpy --help
+langpy --version
+```
 
-- Flags de CLI (--lang, --version)
-- Selección dinámica de idioma
-- Tests del CLI
-- Documentación extendida
+## Project Status
 
----
+**Version:** 0.1.2
 
-## Licencia
+- ✅ Stable transpilation core
+- ✅ Language lexicons defined
+- ✅ Fully functional CLI
+- ✅ Comprehensive test suite
+- ✅ Clear project scope
+
+## Contributing
+
+LangPy's lexicon system is modular, making it easy to add new languages without modifying the core. Want to add your language? We'd love to have you contribute!
+
+## License
 
 MIT
+
+---
+
+**Made with ❤️ for the global Python community**
