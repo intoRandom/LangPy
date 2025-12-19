@@ -22,13 +22,14 @@ def transpile_tree(entry_path: Path, *, force: bool = False) -> list[Path]:
         raise FileNotFoundError(entry_path)
 
     entry_path = entry_path.resolve()
+    root_dir = entry_path.parent
 
     processed: set[Path] = set()
     pending: list[Path] = [entry_path]
     generated: list[Path] = []
 
     # mismo criterio que en ejecución: script dir primero
-    search_paths = [entry_path.parent]
+    search_paths = [root_dir]
 
     while pending:
         current = pending.pop()
@@ -36,9 +37,8 @@ def transpile_tree(entry_path: Path, *, force: bool = False) -> list[Path]:
         if current in processed:
             continue
 
-        output_py = _transpile_file(current, force=force)
-        generated.append(output_py)
-        processed.add(current)
+        if not _is_within_root(current, root_dir):
+            raise ImportError(f"Import outside root directory: {current}")
 
         source = current.read_text(encoding="utf-8")
 
@@ -50,8 +50,18 @@ def transpile_tree(entry_path: Path, *, force: bool = False) -> list[Path]:
 
         for fullname in imports:
             resolved = _resolve_module(fullname, search_paths)
-            if resolved and resolved not in processed:
+            if resolved is None:
+                continue
+
+            if not _is_within_root(resolved, root_dir):
+                raise ImportError(f"Import outside root directory: {resolved}")
+
+            if resolved not in processed:
                 pending.append(resolved)
+
+        output_py = _transpile_file(current, force=force)
+        generated.append(output_py)
+        processed.add(current)
 
     return generated
 
@@ -63,41 +73,75 @@ def _collect_imports(source: str) -> set[str]:
     it = iter(tokens)
 
     for tok in it:
-        # import foo.bar
+        # import a.b.c
         if tok.type == tokenize.NAME and tok.string == "import":
-            next_tok = next(it, None)
-            if next_tok and next_tok.type == tokenize.NAME:
-                imports.add(next_tok.string)
+            parts: list[str] = []
 
-        # from foo.bar import baz
+            while True:
+                t = next(it, None)
+                if t is None:
+                    break
+
+                if t.type == tokenize.NAME:
+                    parts.append(t.string)
+                elif t.type == tokenize.OP and t.string == ".":
+                    continue
+                else:
+                    break
+
+            if parts:
+                imports.add(".".join(parts))
+
+        # from a.b.c import x
         elif tok.type == tokenize.NAME and tok.string == "from":
-            next_tok = next(it, None)
-            if next_tok and next_tok.type == tokenize.NAME:
-                imports.add(next_tok.string)
+            parts: list[str] = []
+
+            while True:
+                t = next(it, None)
+                if t is None:
+                    break
+
+                if t.type == tokenize.NAME:
+                    parts.append(t.string)
+                elif t.type == tokenize.OP and t.string == ".":
+                    continue
+                else:
+                    break
+
+            if parts:
+                imports.add(".".join(parts))
 
     return imports
 
 
 def _resolve_module(fullname: str, search_paths: list[Path]) -> Path | None:
     parts = fullname.split(".")
-    module_name = parts[-1]
 
     for base in search_paths:
         base_path = Path(base)
 
-        # módulo suelto: modulo.<ext>
-        for ext in SUPPORTED_EXTENSIONS:
-            candidate = base_path / f"{module_name}{ext}"
-            if candidate.is_file():
-                return candidate.resolve()
+        # intento jerárquico: a/b/c.<ext>
+        candidate_base = base_path
+        for part in parts[:-1]:
+            candidate_base = candidate_base / part
+            if not candidate_base.is_dir():
+                break
+        else:
+            module_name = parts[-1]
 
-        # paquete: modulo/__init__.<ext>
-        package_dir = base_path / module_name
-        if package_dir.is_dir():
+            # módulo suelto
             for ext in SUPPORTED_EXTENSIONS:
-                init_file = package_dir / f"__init__{ext}"
-                if init_file.is_file():
-                    return init_file.resolve()
+                candidate = candidate_base / f"{module_name}{ext}"
+                if candidate.is_file():
+                    return candidate.resolve()
+
+            # paquete
+            package_dir = candidate_base / module_name
+            if package_dir.is_dir():
+                for ext in SUPPORTED_EXTENSIONS:
+                    init_file = package_dir / f"__init__{ext}"
+                    if init_file.is_file():
+                        return init_file.resolve()
 
     return None
 
@@ -119,3 +163,11 @@ def _transpile_file(path: Path, *, force: bool) -> Path:
 
     output.write_text(result, encoding="utf-8")
     return output
+
+
+def _is_within_root(path: Path, root: Path) -> bool:
+    try:
+        path.resolve().relative_to(root)
+        return True
+    except ValueError:
+        return False
