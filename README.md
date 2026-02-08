@@ -171,7 +171,7 @@ langpy --version
 
 ## Project Status
 
-**Version:** 0.1.3
+**Version:** 0.1.4
 
 - ✅ Stable transpilation core
 - ✅ Language lexicons defined

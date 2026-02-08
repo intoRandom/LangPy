@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "LangPy"
-version = "0.1.3"
+version = "0.1.4"
 description = "Write Python code using keywords in your native language"
 keywords = ["python", "transpiler", "lexer", "i18n", "spanish", "portuguese", "french", "multilingual"]
 readme = "README.md"

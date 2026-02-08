@@ -25,6 +25,7 @@ class SpanishLexicon(Lexicon):
         "y": "and",
         "o": "or",
         "no": "not",
+        "en": "in",
 
         # estructura
         "definir": "def",
