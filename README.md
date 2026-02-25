@@ -1,8 +1,13 @@
+<!--
+Python español, Python français, Python português, learn Python native language,
+Python transpiler, Python localization, Python i18n, Python education, beginner Python
+-->
+
 # LangPy
 
-**Write Python in your native language** 🌍
+**Learn and write Python code in Spanish, French, Portuguese (more coming soon)** 🌍
 
-LangPy is a lexical layer over Python that lets you write code using keywords in human languages, without changing Python's behavior.
+LangPy is a lexical transpiler that lets you learn and write Python code using natural language keywords in Spanish (español), French (français), Portuguese (português), soon more - perfect for beginners and non-English speakers. Write `si` instead of `if`, `para` instead of `for`, with zero runtime overhead.
 
 ```python
 # ejemplo.pyes (Spanish)
@@ -22,7 +27,7 @@ Hola Luis
 
 ## Why LangPy?
 
-LangPy makes Python more accessible to non-English speakers by allowing you to use natural language keywords while keeping everything else exactly the same.
+LangPy makes Python more accessible to non-English speakers and complete beginners by allowing you to use natural language keywords. It's designed to help you focus on learning programming logic in your native language, while making it trivial to migrate to vanilla Python later - no additional tools or new concepts required, just rename your keywords when you're ready.
 
 ### What LangPy IS ✅
 
@@ -50,6 +55,8 @@ Requirements: Python 3.10+
 pip install langpy
 ```
 
+📚 **[Official Documentation](https://langpy.org)** - Complete guides, tutorials, and API reference
+
 ### Your First Program
 
 Create a file `hello.pyes`:
@@ -72,11 +79,11 @@ That's it! LangPy transpiles your code to standard Python and executes it immedi
 
 ## Supported Languages
 
-| Language   | Extension | Keywords Example                     |
-| ---------- | --------- | ------------------------------------ |
-| Spanish    | `.pyes`   | `definir`, `si`, `sino`, `imprimir`  |
-| Portuguese | `.pypt`   | `definir`, `se`, `senao`, `imprimir` |
-| French     | `.pyfr`   | `definir`, `si`, `sinon`, `imprimer` |
+| Language   | Extension | Keywords Example                  |
+| ---------- | --------- | --------------------------------- |
+| Spanish    | `.pyes`   | `para`, `si`, `sino`, `imprimir`  |
+| French     | `.pyfr`   | `pour`, `si`, `sinon`, `imprimer` |
+| Portuguese | `.pypt`   | `para`, `se`, `senao`, `imprimir` |
 
 The language is determined **solely by the file extension**. No flags or configuration needed.
 
@@ -118,6 +125,33 @@ Run it:
 langpy main.pyes
 ```
 
+## Project Structure Support
+
+LangPy supports Python-style package structures with `__main__` entry points:
+
+```
+mi_proyecto/
+├── __main__.pyes          # Entry point
+├── operations.pyes        # Local module
+└── utils/
+    ├── __init__.pyes
+    └── helpers.pyes
+```
+
+Execute the entire project:
+
+```bash
+langpy mi_proyecto/
+```
+
+## Use Cases
+
+- 🎓 **Learning Python** - Focus on programming logic in your native language
+- 🌍 **Teaching** - Teach Python to non-English speaking students
+- 🔄 **Gradual Migration** - Start in your language, migrate to English Python later
+- 🛠️ **Prototyping** - Quick scripts without mental translation overhead
+- 📚 **Educational Content** - Create programming tutorials in local languages
+
 ## How It Works
 
 ```
@@ -145,21 +179,50 @@ execute with Python VM
 ### Execute directly
 
 ```bash
+# Run a file
 langpy script.pyes
+
+# Run a project directory (requires __main__.pyes)
+langpy my_project/
 ```
 
 ### Transpile to Python
 
 ```bash
-langpy --transpile script.pyes
+# Transpile in place (generates .py next to .pyes, resolves LangPy imports)
+langpy transpile script.pyes
+
+# Transpile to specific directory (resolves LangPy imports + copies vanilla .py files)
+langpy transpile main.pyes --output dist/
+langpy transpile main.pyes -o dist/  # short form
 ```
 
-This generates standard `.py` files that you can run with `python`.
+The `transpile` command:
+
+- Always resolves and transpiles all local LangPy imports
+- With `--output`: additionally copies referenced vanilla `.py` files (excludes pip modules)
+- Preserves directory structure in output
+
+### Extract (single-file mode)
+
+For tooling integration (IDE extensions, linters):
+
+```bash
+# Extract to specific file
+langpy extract input.pyes --output build/output.py
+
+# Extract to directory (uses input filename)
+langpy extract input.pyes --output build/
+langpy extract input.pyes -o build/  # short form
+```
+
+The `extract` command transpiles a single file **without** resolving imports - useful for development tools.
 
 ### Force overwrite
 
 ```bash
-langpy --transpile --force script.pyes
+langpy transpile script.pyes --force
+langpy transpile script.pyes -f  # short form
 ```
 
 ### Get help
@@ -171,11 +234,13 @@ langpy --version
 
 ## Project Status
 
-**Version:** 0.1.4
+**Version:** 0.2.0
 
 - ✅ Stable transpilation core
 - ✅ Language lexicons defined
-- ✅ Fully functional CLI
+- ✅ Project structure support (`__main__` entry points)
+- ✅ Import resolution and tree transpilation
+- ✅ Output directory support with structure preservation
 - ✅ Comprehensive test suite
 - ✅ Clear project scope
 

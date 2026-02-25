@@ -41,7 +41,7 @@ def test_transpile_tree_recursive(tmp_path):
     )
 
     # Ejecutamos la transpilación desde el punto de entrada
-    result = run_langpy("--transpile", "test.pyes", cwd=root)
+    result = run_langpy("transpile", "test.pyes", cwd=root)
 
     assert result.returncode == 0
 

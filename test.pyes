@@ -1,9 +1,0 @@
-definir calcular_promedio(numeros):
-    total = 0
-    para num en numeros:
-        total = total + num
-    retornar total / longitud(numeros)
-
-datos = [10, 20, 30, 40]
-datos.agregar(-10)
-imprimir("Promedio:", calcular_promedio(datos))

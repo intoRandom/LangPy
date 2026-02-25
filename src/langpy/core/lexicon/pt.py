@@ -8,23 +8,21 @@ class PortugueseLexicon(Lexicon):
         # controle de fluxo
         "se": "if",
         "senao": "else",
-        "senao_se": "elif",
+        "senaose": "elif",
         "enquanto": "while",
         "para": "for",
         "quebrar": "break",
         "continuar": "continue",
         "retornar": "return",
         "passar": "pass",
-
-        # booleanos
-        "verdadeiro": "True",
-        "falso": "False",
-        "nenhum": "None",
+        "segundo": "match",
+        "caso": "case",
 
         # operadores
         "e": "and",
         "ou": "or",
         "nao": "not",
+        "em": "in",
 
         # estrutura
         "definir": "def",
@@ -35,6 +33,10 @@ class PortugueseLexicon(Lexicon):
         "exceto": "except",
         "finalmente": "finally",
         "lancar": "raise",
+        "global": "global",
+
+        # exceções
+        "Excecao": "Exception",
 
         # imports
         "importar": "import",
@@ -45,4 +47,15 @@ class PortugueseLexicon(Lexicon):
         "comprimento": "len",
         "tipo": "type",
         "intervalo": "range",
+        "apagar": "del",
+        "entrada": "input",
+        "texto": "str",
+        "inteiro": "int",
+        "decimal": "float",
+        "booleano": "bool",
+
+        # booleanos
+        "Verdadeiro": "True",
+        "Falso": "False",
+        "Nenhum": "None",
     }

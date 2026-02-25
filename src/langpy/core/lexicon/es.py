@@ -8,18 +8,15 @@ class SpanishLexicon(Lexicon):
         # control de flujo
         "si": "if",
         "sino": "else",
-        "sino_si": "elif",
+        "sisi": "elif",
         "mientras": "while",
         "para": "for",
         "romper": "break",
         "continuar": "continue",
         "retornar": "return",
         "pasar": "pass",
-
-        # booleanos
-        "verdadero": "True",
-        "falso": "False",
-        "ninguno": "None",
+        "segun": "match",
+        "caso": "case",
 
         # operadores
         "y": "and",
@@ -36,6 +33,10 @@ class SpanishLexicon(Lexicon):
         "excepto": "except",
         "finalmente": "finally",
         "lanzar": "raise",
+        "global": "global",
+
+        # excepciones
+        "Excepcion": "Exception",
 
         # imports
         "importar": "import",
@@ -46,4 +47,15 @@ class SpanishLexicon(Lexicon):
         "longitud": "len",
         "tipo": "type",
         "rango": "range",
+        "borrar": "del",
+        "entrada": "input",
+        "texto": "str",
+        "entero": "int",
+        "decimal": "float",
+        "booleano": "bool",
+
+        # booleanos
+        "Verdadero": "True",
+        "Falso": "False",
+        "Ninguno": "None",
     }

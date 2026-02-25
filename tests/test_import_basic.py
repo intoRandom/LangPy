@@ -13,7 +13,7 @@ def run_langpy(file: Path):
 
 def test_spanish_basic(tmp_path):
     file = tmp_path / "main.pyes"
-    file.write_text("imprimir(verdadero)\n", encoding="utf-8")
+    file.write_text("imprimir(Verdadero)\n", encoding="utf-8")
 
     result = run_langpy(file)
     assert result.returncode == 0
@@ -22,7 +22,7 @@ def test_spanish_basic(tmp_path):
 
 def test_portuguese_basic(tmp_path):
     file = tmp_path / "main.pypt"
-    file.write_text("imprimir(verdadeiro)\n", encoding="utf-8")
+    file.write_text("imprimir(Verdadeiro)\n", encoding="utf-8")
 
     result = run_langpy(file)
     assert result.returncode == 0
@@ -31,7 +31,7 @@ def test_portuguese_basic(tmp_path):
 
 def test_french_basic(tmp_path):
     file = tmp_path / "main.pyfr"
-    file.write_text("imprimer(vrai)\n", encoding="utf-8")
+    file.write_text("imprimer(Vrai)\n", encoding="utf-8")
 
     result = run_langpy(file)
     assert result.returncode == 0

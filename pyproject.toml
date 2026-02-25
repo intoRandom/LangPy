@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "LangPy"
-version = "0.1.4"
-description = "Write Python code using keywords in your native language"
-keywords = ["python", "transpiler", "lexer", "i18n", "spanish", "portuguese", "french", "multilingual"]
+version = "0.2.0"
+description = "Write Python using your native-language keywords"
+keywords = ["python", "transpiler", "español", "français", "português", "localization", "i18n", "education", "beginner-friendly"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
@@ -19,13 +19,13 @@ classifiers = [
 ]
 
 authors = [
-  { name = "Esteban Salgado", email= "contact@intorandom.com" }
+  { name = "Esteban Salgado", email = "contact@langpy.org" }
 ]
 
 dependencies = []
 
 [project.urls]
-Homepage = "https://langpy.intorandom.com/"
+Homepage = "https://langpy.org/"
 Issues = "https://github.com/intoRandom/LangPy/issues"
 
 [project.scripts]
@@ -36,4 +36,3 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

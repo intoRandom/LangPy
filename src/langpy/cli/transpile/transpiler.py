@@ -16,14 +16,21 @@ EXTENSION_TO_LEXICON = {
 }
 
 
-def _transpile_file(path: Path, *, force: bool = False) -> Path:
+def _transpile_file(
+    path: Path,
+    *,
+    force: bool = False,
+    output_path: Path | None = None,  # NUEVO
+) -> Path:
     if path.suffix not in SUPPORTED_EXTENSIONS:
         raise ValueError(f"Unsupported source file: {path}")
 
-    output = path.with_suffix(".py")
+    # Si se especifica output_path, usar ese; sino, al lado del original
+    output = output_path if output_path else path.with_suffix(".py")
 
     if output.exists() and not force:
-        return output
+        raise FileExistsError(
+            f"Output file already exists: {output}. Use --force to overwrite.")
 
     source = path.read_text(encoding="utf-8")
 
@@ -32,6 +39,8 @@ def _transpile_file(path: Path, *, force: bool = False) -> Path:
 
     python_code = transpile(source, lexicon)
 
+    # Crear directorio si no existe
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(python_code, encoding="utf-8")
     return output
 

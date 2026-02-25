@@ -8,23 +8,21 @@ class FrenchLexicon(Lexicon):
         # contrôle de flux
         "si": "if",
         "sinon": "else",
-        "sinon_si": "elif",
-        "tant_que": "while",
+        "sinonsi": "elif",
+        "tantque": "while",
         "pour": "for",
         "rompre": "break",
         "continuer": "continue",
         "retourner": "return",
         "passer": "pass",
-
-        # booléens
-        "vrai": "True",
-        "faux": "False",
-        "aucun": "None",
+        "selon": "match",
+        "cas": "case",
 
         # opérateurs
         "et": "and",
         "ou": "or",
         "non": "not",
+        "dans": "in",
 
         # structure
         "definir": "def",
@@ -32,9 +30,13 @@ class FrenchLexicon(Lexicon):
         "avec": "with",
         "comme": "as",
         "essayer": "try",
-        "excepté": "except",
+        "excepte": "except",
         "finalement": "finally",
         "lancer": "raise",
+        "global": "global",
+
+        # exceptions
+        "Exception": "Exception",
 
         # imports
         "importer": "import",
@@ -45,4 +47,15 @@ class FrenchLexicon(Lexicon):
         "longueur": "len",
         "type": "type",
         "intervalle": "range",
+        "supprimer": "del",
+        "entree": "input",
+        "texte": "str",
+        "entier": "int",
+        "decimal": "float",
+        "booleen": "bool",
+
+        # booléens
+        "Vrai": "True",
+        "Faux": "False",
+        "Aucun": "None",
     }

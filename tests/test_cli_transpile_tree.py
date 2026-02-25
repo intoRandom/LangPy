@@ -21,7 +21,7 @@ def test_transpile_with_imports(tmp_path):
         "importar mod\nimprimir(mod.f())", encoding="utf-8"
     )
 
-    result = run_langpy("--transpile", "main.pyes", cwd=tmp_path)
+    result = run_langpy("transpile", "main.pyes", cwd=tmp_path)
     assert result.returncode == 0
 
     assert (tmp_path / "main.py").exists()

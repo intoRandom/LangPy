@@ -19,7 +19,7 @@ def test_transpile_refuses_overwrite(tmp_path):
     (tmp_path / "main.pyes").write_text("imprimir('a')", encoding="utf-8")
     (tmp_path / "main.py").write_text("print('existing')", encoding="utf-8")
 
-    result = run_langpy("--transpile", "main.pyes", cwd=tmp_path)
+    result = run_langpy("transpile", "main.pyes", cwd=tmp_path)
     assert result.returncode != 0
 
 
@@ -27,7 +27,7 @@ def test_transpile_force_overwrite(tmp_path):
     (tmp_path / "main.pyes").write_text("imprimir('b')", encoding="utf-8")
     (tmp_path / "main.py").write_text("print('old')", encoding="utf-8")
 
-    result = run_langpy("--transpile", "--force", "main.pyes", cwd=tmp_path)
+    result = run_langpy("transpile", "--force", "main.pyes", cwd=tmp_path)
     assert result.returncode == 0
     assert "print" in (tmp_path / "main.py").read_text(encoding="utf-8")
 
@@ -44,8 +44,9 @@ def test_output_single_file(tmp_path):
     out_dir.mkdir(exist_ok=True)
     out_file = out_dir / "main.py"
 
-    # Ejecutamos con la bandera --output
-    result = run_langpy("--output", str(out_file), "main.pyes", cwd=tmp_path)
+    # Ejecutamos con el subcomando output
+    result = run_langpy("extract", "main.pyes", "-o",
+                        str(out_file), cwd=tmp_path)
 
     # Verificaciones
     assert result.returncode == 0

@@ -21,7 +21,7 @@ def test_import_sibling_module(tmp_path):
     file1 = tmp_path / "file1.pyes"
 
     file1.write_text(
-        "imprimir(verdadero)\n",
+        "imprimir(Verdadero)\n",
         encoding="utf-8",
     )
 
@@ -48,7 +48,7 @@ def test_import_from_package(tmp_path):
     main = tmp_path / "main.pyes"
 
     file2.write_text(
-        "imprimir(verdadero)\n",
+        "imprimir(Verdadero)\n",
         encoding="utf-8",
     )
 
@@ -75,7 +75,7 @@ def test_from_import_module(tmp_path):
     main = tmp_path / "main.pyes"
 
     file2.write_text(
-        "imprimir(verdadero)\n",
+        "imprimir(Verdadero)\n",
         encoding="utf-8",
     )
 
@@ -103,7 +103,7 @@ def test_recursive_import_chain(tmp_path):
     file3 = folder / "file3.pyes"
 
     file3.write_text(
-        "imprimir(verdadero)\n",
+        "imprimir(Verdadero)\n",
         encoding="utf-8",
     )
 
@@ -135,7 +135,7 @@ def test_package_init_import(tmp_path):
     main = tmp_path / "main.pyes"
 
     init.write_text(
-        "imprimir(verdadero)\n",
+        "imprimir(Verdadero)\n",
         encoding="utf-8",
     )
 
@@ -159,7 +159,7 @@ def test_cross_language_import(tmp_path):
     file_pt = tmp_path / "file_pt.pypt"
 
     file_pt.write_text(
-        "imprimir(verdadeiro)\n",
+        "imprimir(Verdadeiro)\n",
         encoding="utf-8",
     )
 
